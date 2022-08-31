@@ -24,11 +24,13 @@ axios.get(url).then(async result => {
         rawEmail.indexOf('<a href="mailto:') + '<a href="mailto:'.length
       );
       return {
-        ...hackathon,
+        id: hackathon.id,
+        title: hackathon.title.trim(),
         email,
       };
     })
   );
 
-  console.log('results', results);
+  console.log('Results', results);
+  console.log('Total Results', results.length);
 });
