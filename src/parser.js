@@ -52,7 +52,15 @@ async function parser(page = 0) {
     await parser(page);
   }
 
-  return responses.flat();
+  const items = responses.flat().reduce((obj, it) => {
+    obj[it.id] = it;
+    return obj;
+  }, {});
+
+  return Object.values(items).reduce((arr, item) => {
+    arr.push(item);
+    return arr;
+  }, []);
 }
 
 module.exports = { parser };
