@@ -1,5 +1,4 @@
 const Router = require('koa-router');
-const { parser } = require('./parser');
 const logger = require('./logger');
 const { readFile, writeFile } = require('fs/promises');
 const { getBodyEmail } = require('./getBodyEmail');
@@ -41,6 +40,9 @@ router.get('/items', async ctx => {
             return `
               <li onclick="onItemClickFunction(${it.id})" id="item-${it.id}" style="${styles}">
                   <h4 style="padding: 0">${it.title}</h4>
+                  <div>
+                    <input type="text" value="${it.email}" id="email-input">
+                  </div>
                   <a href="mailto:${it.email}?subject=Hackathon Judging ${it.title}&body=${bodyEmail}">${it.email}</a> 
               </li>
             `;
@@ -58,9 +60,6 @@ router.get('/items', async ctx => {
               const isSelected = element.style.backgroundColor === "black"
               element.style.color = !isSelected ? "gray" : "black";
               element.style.backgroundColor = isSelected ? "#f2f2f2" : "black"
-              const xhr = new XMLHttpRequest();
-              xhr.open('GET', '/api/v1/write/' + id);
-              xhr.send();
             }
           </script>
           <h2>Results: ${Object.values(results).length}</h2>
